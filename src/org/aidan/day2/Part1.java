@@ -1,6 +1,7 @@
 package org.aidan.day2;
 
-import org.aidan.Output;
+import org.aidan.utils.Output;
+
 import java.util.List;
 
 public class Part1 implements Output<Integer> {

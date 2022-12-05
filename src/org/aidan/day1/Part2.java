@@ -1,6 +1,6 @@
 package org.aidan.day1;
 
-import org.aidan.Output;
+import org.aidan.utils.Output;
 
 import java.util.ArrayList;
 import java.util.Comparator;

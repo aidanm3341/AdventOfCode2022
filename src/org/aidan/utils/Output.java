@@ -1,4 +1,4 @@
-package org.aidan;
+package org.aidan.utils;
 
 import java.util.List;
 

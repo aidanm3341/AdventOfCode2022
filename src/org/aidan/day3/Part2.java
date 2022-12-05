@@ -1,12 +1,9 @@
 package org.aidan.day3;
 
-import org.aidan.Output;
+import org.aidan.utils.Output;
 import org.aidan.utils.Tuple3;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 public class Part2 implements Output<Integer> {

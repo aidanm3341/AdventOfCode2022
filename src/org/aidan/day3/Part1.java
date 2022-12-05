@@ -1,6 +1,6 @@
 package org.aidan.day3;
 
-import org.aidan.Output;
+import org.aidan.utils.Output;
 
 import java.util.List;
 

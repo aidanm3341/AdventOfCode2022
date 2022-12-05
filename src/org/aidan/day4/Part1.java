@@ -1,10 +1,9 @@
 package org.aidan.day4;
 
-import org.aidan.Output;
+import org.aidan.utils.Output;
 import org.aidan.utils.Tuple2;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Part1 implements Output<Long> {
     @Override
