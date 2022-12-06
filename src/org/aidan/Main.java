@@ -23,6 +23,8 @@ public class Main {
         parts.add(new org.aidan.day4.Part2());
         parts.add(new org.aidan.day5.Part1());
         parts.add(new org.aidan.day5.Part2());
+        parts.add(new org.aidan.day6.Part1());
+        parts.add(new org.aidan.day6.Part2());
     }
 
     public void runDay(int day) throws FileNotFoundException {
