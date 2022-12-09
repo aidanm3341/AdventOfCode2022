@@ -1,8 +1,8 @@
 package org.aidan.utils;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class InfiniteGrid<T> implements Iterable<T> {
     private final LinkedList<LinkedList<T>> grid;
@@ -104,6 +104,10 @@ public class InfiniteGrid<T> implements Iterable<T> {
 
     public int getHeight(){
         return grid.size();
+    }
+
+    public Stream<T> stream() {
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator(), Spliterator.ORDERED), false);
     }
 
     @Override

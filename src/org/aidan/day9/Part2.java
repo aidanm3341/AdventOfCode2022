@@ -7,56 +7,36 @@ import org.aidan.utils.Tuple2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Part2 implements Output<Integer> {
+public class Part2 implements Output<Long> {
 
     private InfiniteGrid<Character> grid;
     private List<Tuple2<Integer, Integer>> poses;
 
     @Override
-    public Integer execute(List<String> input) {
+    public Long execute(List<String> input) {
         grid = new InfiniteGrid<>('.');
         poses = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++)
             poses.add(new Tuple2<>(0, 0));
-        }
 
         input.forEach(this::handleInput);
-
-        int total = 0;
-        for (Character c : grid) {
-            if (c.equals('#'))
-                total++;
-        }
-        return total;
+        return grid.stream()
+                .filter(c -> c.equals('#'))
+                .count();
     }
 
     private void handleInput(String input) {
-        String[] strings = input.split(" ");
-        for (int i = 0; i < Integer.parseInt(strings[1]); i++) {
-            movePos(poses.get(0), input.charAt(0));
-            for (int j = 0; j < poses.size()-1; j++) {
+        char direction = input.charAt(0);
+        int amount = Integer.parseInt(input.substring(2));
+
+        for (int i = 0; i < amount; i++) {
+            movePos(poses.get(0), direction);
+
+            for (int j = 0; j < poses.size()-1; j++)
                 moveFirstTowardsSecond(poses.get(j+1), poses.get(j));
-            }
+
             grid.set('#', poses.get(9).getOne(), poses.get(9).getTwo());
         }
-        draw(input);
-    }
-
-    private void draw(String input) {
-        List<Character> originalChars = new ArrayList<>();
-        System.out.println("== " + input + " ==\n");
-
-        for (Tuple2<Integer, Integer> pose : poses)
-            originalChars.add(grid.getElementAt(pose.getOne(), pose.getTwo()));
-
-        for (int i = 0; i < poses.size(); i++)
-            grid.set((""+i).charAt(0), poses.get(i).getOne(), poses.get(i).getTwo());
-
-        System.out.println(grid);
-        System.out.println();
-
-        for (int i = 0; i < poses.size(); i++)
-            grid.set(originalChars.get(i), poses.get(i).getOne(), poses.get(i).getTwo());
     }
 
     private void movePos(Tuple2<Integer, Integer> pos, char dir) {
@@ -69,12 +49,12 @@ public class Part2 implements Output<Integer> {
     }
 
     private void moveFirstTowardsSecond(Tuple2<Integer, Integer> tail, Tuple2<Integer, Integer> head) {
-        if (Math.abs(tail.getOne() - head.getOne()) <= 1 && Math.abs(tail.getTwo() - head.getTwo()) <= 1) {
-            // is adjacent
-            return;
+        boolean isAdjacent = Math.abs(tail.getOne() - head.getOne()) <= 1 && Math.abs(tail.getTwo() - head.getTwo()) <= 1;
+
+        if (!isAdjacent) {
+            tail.setOne(tail.getOne() + Integer.signum(head.getOne() - tail.getOne()));
+            tail.setTwo(tail.getTwo() + Integer.signum(head.getTwo() - tail.getTwo()));
         }
-        tail.setOne(tail.getOne() + Integer.signum(head.getOne() - tail.getOne()));
-        tail.setTwo(tail.getTwo() + Integer.signum(head.getTwo() - tail.getTwo()));
     }
 }
 
