@@ -1,31 +1,31 @@
 package org.aidan.day8;
 
+import org.aidan.utils.AocUtilities;
 import org.aidan.utils.InfiniteGrid;
 import org.aidan.utils.Output;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Part1 implements Output<Integer>  {
+public class Part1 implements Output<Long>  {
     private InfiniteGrid<Integer> trees;
+
     @Override
-    public Integer execute(List<String> input) {
+    public Long execute(List<String> input) {
         trees = new InfiniteGrid<>();
 
-        AtomicInteger row = new AtomicInteger();
+        for (int i = 0; i < input.size(); i++)
+            addTreesToRow(input.get(i), i);
 
-        input.stream()
-                .peek(line -> addTreesToRow(line, row.get()))
-                .forEach(i -> row.getAndIncrement());
+        return AocUtilities.allCombinations(trees.getWidth(), trees.getHeight())
+                .filter(coords -> isVisible(coords.getOne(), coords.getTwo()))
+                .count();
+    }
 
-        int total = 0;
-        for (int i = 0; i < trees.getWidth(); i++) {
-            for (int j = 0; j < trees.getHeight(); j++) {
-                if (isVisible(i, j))
-                    total++;
-            }
+    private void addTreesToRow(String line, int row) {
+        for (int x = 0; x < line.length(); x++) {
+            int treeHeight = Character.getNumericValue(line.charAt(x));
+            trees.set(treeHeight, x, row);
         }
-        return total;
     }
 
     private boolean isVisible(int x, int y) {
@@ -61,13 +61,5 @@ public class Part1 implements Output<Integer>  {
             if (trees.getElementAt(i, y) >= trees.getElementAt(x, y))
                 return false;
         return true;
-    }
-
-    private void addTreesToRow(String line, int row) {
-        AtomicInteger x = new AtomicInteger();
-        line.chars()
-                .map(i -> Integer.parseInt(String.valueOf((char) i)))
-                .peek(i -> trees.set(i, x.get(), row))
-                .forEach(i -> x.getAndIncrement());
     }
 }
