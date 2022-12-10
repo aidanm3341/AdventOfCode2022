@@ -41,14 +41,18 @@ public class Main {
         System.out.println();
         System.out.println("================================");
         System.out.println("Day " + day);
+
         if(day <= parts.size()) {
             System.out.println("\tPart 1");
             System.out.println("\t\t" + parts.get(day*2 - 2).execute(input));
             System.out.println();
         }
+
         if(day <= parts.size()/2) {
+            String output = parts.get(day*2 - 1).execute(input).toString();
+
             System.out.println("\tPart 2");
-            System.out.println("\t\t" + parts.get(day*2 - 1).execute(input));
+            System.out.println(output.indent(8));
             System.out.println();
         }
         System.out.println("================================");
